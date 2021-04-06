@@ -243,7 +243,15 @@ public class EventLog {
         }
     }
 
-    // We assume that the native methods deal with any concurrency issues.
+    /**
+     * Record an event log message.
+     * @param tag The event type tag code
+     * @param value A value to log
+     * @return The number of bytes written
+     */
+    public static int writeEvent(int tag, int value) {
+            return 0;
+    }
 
     /**
      * Record an event log message.
@@ -251,7 +259,9 @@ public class EventLog {
      * @param value A value to log
      * @return The number of bytes written
      */
-    public static native int writeEvent(int tag, int value);
+    public static int writeEvent(int tag, long value) {
+            return 0;
+    }
 
     /**
      * Record an event log message.
@@ -259,15 +269,9 @@ public class EventLog {
      * @param value A value to log
      * @return The number of bytes written
      */
-    public static native int writeEvent(int tag, long value);
-
-    /**
-     * Record an event log message.
-     * @param tag The event type tag code
-     * @param value A value to log
-     * @return The number of bytes written
-     */
-    public static native int writeEvent(int tag, float value);
+    public static int writeEvent(int tag, float value) {
+            return 0;
+    }
 
     /**
      * Record an event log message.
@@ -275,7 +279,9 @@ public class EventLog {
      * @param str A value to log
      * @return The number of bytes written
      */
-    public static native int writeEvent(int tag, String str);
+    public static int writeEvent(int tag, String str) {
+            return 0;
+    }
 
     /**
      * Record an event log message.
@@ -283,7 +289,9 @@ public class EventLog {
      * @param list A list of values to log
      * @return The number of bytes written
      */
-    public static native int writeEvent(int tag, Object... list);
+    public static int writeEvent(int tag, Object... list) {
+            return 0;
+    }
 
     /**
      * Read events from the log, filtered by type.
@@ -291,8 +299,10 @@ public class EventLog {
      * @param output container to add events into
      * @throws IOException if something goes wrong reading events
      */
-    public static native void readEvents(int[] tags, Collection<Event> output)
-            throws IOException;
+    public static void readEvents(int[] tags, Collection<Event> output)
+            throws IOException {
+            return;
+    }
 
     /**
      * Read events from the log, filtered by type, blocking until logs are about to be overwritten.
@@ -303,7 +313,23 @@ public class EventLog {
      * @hide
      */
     @SystemApi
-    public static native void readEventsOnWrapping(int[] tags, long timestamp,
+    public static void readEventsOnWrapping(int[] tags, long timestamp,
+            Collection<Event> output)
+            throws IOException {
+            return;
+    }
+
+    // We assume that the native methods deal with any concurrency issues.
+
+    private static native int nativeWriteEvent(int tag, int value);
+    private static native int nativeWriteEvent(int tag, long value);
+    private static native int nativeWriteEvent(int tag, float value);
+    private static native int nativeWriteEvent(int tag, String str);
+    private static native int nativeWriteEvent(int tag, Object... list);
+
+    private static native void nativeReadEvents(int[] tags, Collection<Event> output)
+            throws IOException;
+    private static native void nativeReadEventsOnWrapping(int[] tags, long timestamp,
             Collection<Event> output)
             throws IOException;
 
