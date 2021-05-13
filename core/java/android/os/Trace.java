@@ -178,11 +178,7 @@ public final class Trace {
      */
     @UnsupportedAppUsage
     public static boolean isTagEnabled(long traceTag) {
-        long tags = sEnabledTags;
-        if (tags == TRACE_TAG_NOT_READY) {
-            tags = cacheEnabledTags();
-        }
-        return (tags & traceTag) != 0;
+        return false;
     }
 
     /**
